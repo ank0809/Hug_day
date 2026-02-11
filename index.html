@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Hug Day 🤍</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    overflow-x: hidden;
+    background: url('https://media.tenor.com/0AVbKGY_MxMAAAAC/couple-hug.gif') center/cover no-repeat fixed;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(3px);
+    z-index: -1;
+}
+
+h1 {
+    margin-top: 40px;
+    font-size: 2.5rem;
+    color: #ff4d6d;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ff99ac; }
+    to { text-shadow: 0 0 25px #ff4d6d; }
+}
+
+#text-container {
+    margin-top: 30px;
+    font-size: 1.2rem;
+    color: #333;
+    min-height: 300px;
+}
+
+.line {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    margin: 8px 0;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+button {
+    margin-top: 25px;
+    padding: 12px 25px;
+    font-size: 17px;
+    border: none;
+    border-radius: 30px;
+    background-color: #ff4d6d;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background-color: #ff1e4d;
+}
+
+#overlay {
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(8px);
+    background: rgba(0,0,0,0.4);
+    display: none;
+    z-index: 5;
+}
+
+#popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    display: none;
+    z-index: 10;
+    animation: popup 0.4s ease;
+    width: 85%;
+    max-width: 350px;
+}
+
+@keyframes popup {
+    from { transform: translate(-50%, -60%) scale(0.8); }
+    to { transform: translate(-50%, -50%) scale(1); }
+}
+
+.teddy {
+    width: 120px;
+    margin-top: 10px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.hold-btn {
+    background: #ff85a2;
+}
+
+.heart {
+    position: fixed;
+    color: #ff4d6d;
+    font-size: 20px;
+    animation: float 5s linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
+}
+
+.couple {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 40px;
+    opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Happy Hug Day 🤍</h1>
+
+<div id="text-container"></div>
+
+<button onclick="openPopup()">Come Here For A Hug 🫶</button>
+
+<div id="overlay"></div>
+
+<div id="popup">
+    <h2>My Safe Place 🤍</h2>
+    <p>You will never face anything alone. My arms are forever yours.</p>
+
+    <img src="https://media.tenor.com/qzGqM7aB0bMAAAAC/teddy-bear.gif" class="teddy">
+
+    <br>
+    <button class="hold-btn" 
+        onmousedown="longHug()" 
+        ontouchstart="longHug()">
+        Press & Hold For Long Hug 🤍
+    </button>
+
+    <br><br>
+    <button onclick="closePopup()">Close 🤍</button>
+</div>
+
+<div class="couple">👩‍❤️‍👨</div>
+
+<!-- Sounds -->
+<audio id="heartbeat" src="https://www.fesliyanstudios.com/play-mp3/4381" preload="auto"></audio>
+
+<script>
+
+const lines = [
+"My arms are your safest place 🤍",
+"",
+"Whenever the world feels too heavy,",
+"come to me.",
+"",
+"I’ll wrap you in the warmest hug,",
+"and protect you from every storm.",
+"",
+"I wanna be your warm person 🫶",
+"The one who fixes your bad days",
+"with just one tight hug.",
+"",
+"No matter what happens,",
+"my arms will always stay open for you.",
+"",
+"Stay in my hug forever 🤍"
+];
+
+let container = document.getElementById("text-container");
+let delay = 0;
+
+lines.forEach(line => {
+    setTimeout(() => {
+        let p = document.createElement("div");
+        p.className = "line";
+        p.innerText = line;
+        container.appendChild(p);
+    }, delay);
+    delay += 1200;
+});
+
+let heartInterval;
+
+function openPopup() {
+    document.getElementById("popup").style.display = "block";
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("heartbeat").play();
+    heartInterval = setInterval(createHeart, 300);
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("heartbeat").pause();
+    clearInterval(heartInterval);
+}
+
+function createHeart() {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "🤍";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+}
+
+function longHug() {
+    alert("Holding you tighter and never letting go 🤍");
+}
+
+</script>
+
+</body>
+</html>
